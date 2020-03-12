@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 
@@ -6,17 +7,41 @@ namespace StatsenkoAA
 {
     public static class Patrol
     {
-        public static Vector3 GenericPoint(Transform agent)
+        private static Vector3[] _listPoint;
+        private static int _indexCurPoint;
+        private static int _minDistance = 25;
+        private static int _maxDistance = 150;
+
+        static Patrol()
+        {
+            var tempPoints = Object.FindObjectsOfType<DestroyPoint>();
+            _listPoint = tempPoints.Select(o => o.transform.position).ToArray();
+        }
+
+        public static Vector3 GenericPoint(Transform agent, bool isRandom = true)
         {
             Vector3 result;
 
-            var distance = Random.Range(5, 50);
-            var randomPoint = Random.insideUnitSphere * distance;
+            if (isRandom)
+            {
+                var dis = Random.Range(_minDistance, _maxDistance);
+                var randomPoint = Random.insideUnitSphere * dis;
 
-            NavMesh.SamplePosition(agent.position + randomPoint,
-                out var hit, distance, NavMesh.AllAreas);
-            result = hit.position;
-
+                NavMesh.SamplePosition(agent.position + randomPoint, out var hit, dis, NavMesh.AllAreas);
+                result = hit.position;
+            }
+            else
+            {
+                if (_indexCurPoint < _listPoint.Length - 1)
+                {
+                    _indexCurPoint++;
+                }
+                else
+                {
+                    _indexCurPoint = 0;
+                }
+                result = _listPoint[_indexCurPoint];
+            }
             return result;
         }
     }

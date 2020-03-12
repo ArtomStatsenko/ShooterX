@@ -7,7 +7,7 @@ namespace StatsenkoAA
 {
     public sealed class BotController : BaseController, IExecute, IInitialization
     {
-        private readonly int _countBot = 1;
+        private readonly int _countBot = 5;
         private readonly HashSet<Bot> _getBotList = new HashSet<Bot>();
 
         public void Initialization()
