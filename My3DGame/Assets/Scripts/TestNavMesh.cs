@@ -11,7 +11,6 @@ namespace StatsenkoAA
 	    
 	    private NavMeshPath _path;
 	    private float _elapsed = 0;
-        //
 
 	    private void Start()
 	    {
