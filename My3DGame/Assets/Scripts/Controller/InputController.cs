@@ -6,12 +6,12 @@ namespace StatsenkoAA
     public sealed class InputController : BaseController, IExecute
     {
         private const string MOUSE_SCROLL = "Mouse ScrollWheel";
+        private int _mouseButton = (int)MouseButton.LeftButton;
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
         private KeyCode _reloadClip = KeyCode.R;
         private KeyCode _gun = KeyCode.Alpha1;
         private KeyCode _grenade = KeyCode.Alpha2;
-        private int _mouseButton = (int)MouseButton.LeftButton;
 
         public InputController()
         {

@@ -4,25 +4,34 @@ namespace StatsenkoAA
 {
     public sealed class UnitMotor : IMotor
     {
-        private Transform _instance;
+        public float XSensitivity = 2f;
+        public float YSensitivity = 2f;
+        public float MinimumX = -90F;
+        public float MaximumX = 90F;
+        public float SmoothTime = 5f;
+        public bool Smooth;
+        public bool ClampVerticalRotation = true;
+        public Transform InstanceObject;
 
         private float _speedMove = 10;
         private float _jumpPower = 10;
         private float _gravityForce;
+
+        private Transform _instance;
+        private Transform _head;
         private Vector2 _input;
         private Vector3 _moveVector;
-        private CharacterController _characterController;
-        private Transform _head;
-
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
-        public bool ClampVerticalRotation = true;
-        public float MinimumX = -90F;
-        public float MaximumX = 90F;
-        public bool Smooth;
-        public float SmoothTime = 5f;
         private Quaternion _characterTargetRot;
         private Quaternion _cameraTargetRot;
+        private CharacterController _characterController;
+
+        public static UnitMotor Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+            InstanceObject = GameObject.FindGameObjectWithTag("Player").transform;
+        }
 
         public UnitMotor(CharacterController instance)
         {
